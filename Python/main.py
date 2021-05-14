@@ -22,9 +22,10 @@ def process_extracts(path):
     # To get the names and paths of all the files present in the data Folder
     print("These are the extracts present in the Data Folder:")
     for i in csv_directory:
-        final_path = path + '\\' + i
-        f.append(final_path)
-        print(i,'\n')
+        if i[-3:] in ['csv']:
+            final_path = path + '\\' + i
+            f.append(final_path)
+            print(i,'\n')
     
     
     #Combining different csv files into a single dataFrame
@@ -45,26 +46,26 @@ def process_extracts(path):
 def source():
     #Defining the required variables and dataframes     
     combined_csv_data = pd.DataFrame()
-    str = ''
+    str_a = ''
     #To get the current path
     c = os.getcwd()
     l = os.listdir(c)
     count = 0
     if 'Data' in l:
         count = 1
-        str = l
+        str_a = str(c)
     else:
         a = list(c.split('\\'))
         b = a[:len(a)-1]
-        str = "\\".join(b)
-        l = os.listdir(str)
+        str_a = "\\".join(b)
+        l = os.listdir(str_a)
         if 'Data' not in l:
             print("No Data folder forund which means none of the bank data we have received")
         else:
             count = 1
     if count == 1:
         print("We have found the Data folder where the different banks related data is usually available")
-        str1 = str + '\\' + 'Data'
+        str1 = str_a + '\\' + 'Data'
         m = os.listdir(str1)
     #To check if the data folder really contains any csv files
         if not m:
